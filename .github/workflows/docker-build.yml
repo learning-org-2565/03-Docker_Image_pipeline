@@ -1,4 +1,4 @@
-name: Build Docker Image
+name: Build and Prepare Docker Image
 
 on:
   workflow_dispatch:  # Allows you to manually trigger this workflow from GitHub
@@ -32,3 +32,17 @@ jobs:
         with:
           name: my-app-image
           path: my-app.tar
+
+      # Step 6: Print Docker commands for local testing
+      - name: Print Docker Image Info and Run Command
+        run: |
+          echo "Docker image has been built successfully!"
+          echo "To use this image locally, follow these steps:"
+          echo ""
+          echo "1. Download the Docker image artifact (my-app.tar) from this workflow run in GitHub Actions."
+          echo "2. Load the Docker image into your local Docker:"
+          echo "   docker load < my-app.tar"
+          echo ""
+          echo "3. Run the Docker container locally:"
+          echo "   docker run -d -p 8080:80 my-app:latest"
+          echo ""
