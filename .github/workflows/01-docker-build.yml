@@ -1,4 +1,4 @@
-name: Build and Prepare Docker Image
+name: 01-Build and Prepare Docker Image
 
 on:
   workflow_dispatch:  # Allows you to manually trigger this workflow from GitHub

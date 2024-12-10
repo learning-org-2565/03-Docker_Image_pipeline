@@ -1,0 +1,63 @@
+name: 03-Build and Push Docker Image to registry
+
+on:
+  workflow_dispatch:  # Allows you to manually trigger this workflow from GitHub
+    inputs:
+      tag:  # Optional input for a custom tag
+        description: 'Tag for the Docker image (default: Git SHA or latest)'
+        required: false
+        default: ''
+
+jobs:
+  docker-build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Docker
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Step 3: Determine the Image Tag
+      - name: Set Docker Image Tag
+        id: tag  # This creates an ID to reuse the output in later steps
+        run: |
+          if [ "${{ github.event.inputs.tag }}" != "" ]; then
+            echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          else
+            echo "tag=$(echo ${{ github.sha }} | head -c 7)" >> $GITHUB_ENV
+          fi
+        # Save the tag value for later steps
+        env:
+          GITHUB_ENV: $GITHUB_ENV
+
+      # Step 4: Build the Docker image
+      - name: Build Docker Image
+        run: |
+          docker build -t my-app:${{ env.tag }} .
+
+      # Step 5: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      # Step 6: Tag the Docker image
+      - name: Tag Docker Image for Docker Hub
+        run: |
+          docker tag my-app:${{ env.tag }} ${{ secrets.DOCKER_USERNAME }}/my-app:${{ env.tag }}
+
+      # Step 7: Push the Docker image to Docker Hub
+      - name: Push Docker Image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/my-app:${{ env.tag }}
+
+      # Step 8: Print Image Info
+      - name: Print Image Info
+        run: |
+          echo "Docker image has been pushed to Docker Hub:"
+          echo "Image: ${{ secrets.DOCKER_USERNAME }}/my-app:${{ env.tag }}"
