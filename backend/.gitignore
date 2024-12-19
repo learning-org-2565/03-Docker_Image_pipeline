@@ -1,0 +1,26 @@
+# Python bytecode and cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+
+# Database files
+*.db
+
+# Environment variables
+.env
+
+# Alembic migrations cache
+alembic/versions/
+
+# Node modules (if applicable, for front-end parts)
+node_modules/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# System-specific files
+.DS_Store
+Thumbs.db

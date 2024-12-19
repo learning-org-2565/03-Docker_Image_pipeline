@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# System-specific files
+.DS_Store
+Thumbs.db
+
+# Build directory (if you’re generating one)
+dist/
+
+# Cache files
+.vite/
+*.cache
+
+# Local environment variables
+.env
+.env.local
+
+# Temporary files created by editors
+.vscode/
+*.bak
+*.swp
