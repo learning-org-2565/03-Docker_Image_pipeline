@@ -19,5 +19,11 @@ export default defineConfig({
   preview: {
     port: 5173,
     host: true
+  },
+  build: {
+    target: 'esnext', // Use latest ECMAScript version
+    commonjsOptions: {
+      transformMixedEsModules: true // Ensure compatibility with older CJS modules
+    }
   }
 })
