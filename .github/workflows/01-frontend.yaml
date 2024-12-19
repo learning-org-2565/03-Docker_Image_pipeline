@@ -38,7 +38,7 @@ jobs:
 
       # Build the frontend
       - name: Build Frontend
-        run: npm run build
+        run: npm run build --force
         working-directory: ./frontend
 
       # Archive Build Artifacts (Optional)
