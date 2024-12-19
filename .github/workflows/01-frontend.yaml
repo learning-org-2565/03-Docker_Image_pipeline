@@ -38,13 +38,11 @@ jobs:
 
       # Build the frontend
       - name: Build Frontend
-        run: npm run build --force
+        run: npm run build 
         working-directory: ./frontend
 
-      # Archive Build Artifacts (Optional)
-      - name: Archive Build Artifacts
-        if: success()
-        uses: actions/upload-artifact@v3
-        with:
-          name: frontend-build
-          path: ./frontend/build
+      - name: Run app
+        run: npm run dev
+        working-directory: ./frontend
+
+      
