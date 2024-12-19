@@ -1,4 +1,4 @@
-name: Manual Docker Image Build
+name: 05- central Docker Image Build
 
 on:
   workflow_dispatch:
