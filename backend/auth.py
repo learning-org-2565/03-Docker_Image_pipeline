@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 import os
 
-SECRET_KEY = "your-secret-key-here"  # In production, use environment variable
+SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-here")  # Use environment variable for SECRET_KEY
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
